@@ -2,6 +2,7 @@ package com.devsuperior.dscommerce.entities;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -25,7 +26,7 @@ public class Product {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	private Double price;
-	private String imgURL;
+	private String imgUrl;
 	//para muitos para muitos a coleção tem que ser set, para não repetir os códigos na tabela do N-N
 	@ManyToMany
 	@JoinTable(name = "tb_product_category",
@@ -39,12 +40,12 @@ public class Product {
 		
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgURL) {	
+	public Product(Long id, String name, String description, Double price, String imgUrl) {	
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
-		this.imgURL = imgURL;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -83,12 +84,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public String getImgURL() {
-		return imgURL;
+	public String getimgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgURL(String imgURL) {
-		this.imgURL = imgURL;
+	public void setimgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public Set<OrderItem> getItems() {
@@ -98,4 +99,22 @@ public class Product {
     public List<Order> getOrder(){
     	return items.stream().map(x -> x.getOrder()).toList();
     }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(id, other.id);
+	}
+    
 }
