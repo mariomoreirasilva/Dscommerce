@@ -25,8 +25,7 @@ public class ProductService {
 		//do ProductDTO
 		//ProductDTO dto = new ProductDTO(product.getId(), product.getName(), product.getDescription()......
 		ProductDTO dto = new ProductDTO(product); // copia para a variavel dto o product para fornecer ao controlador
-		return dto;
-		
+		return dto;		
 	}
 	
 	@Transactional(readOnly = true)
@@ -68,6 +67,11 @@ public class ProductService {
 		return new ProductDTO(entity);		
 		
 	}
+	
+	@Transactional
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
 
 	private void copyDTOToEntity(ProductDTO dto, Product entity) {
 		entity.setName(dto.getName());
@@ -76,6 +80,7 @@ public class ProductService {
 		entity.setimgUrl(dto.getImgUrl());
 		entity = repository.save(entity);		
 	}	
+
 
 	
 	
