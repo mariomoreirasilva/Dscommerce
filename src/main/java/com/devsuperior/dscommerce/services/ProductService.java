@@ -41,16 +41,42 @@ public class ProductService {
 	public ProductDTO insert(ProductDTO dto) {
 		Product entity = new Product();
 		//copiar para a entidade os dados que vieram da dto(la do controler)
-		entity.setName(dto.getName());
+		/*entity.setName(dto.getName());
 		entity.setDescription(dto.getDescription());
 		entity.setPrice(dto.getPrice());
 		entity.setimgUrl(dto.getImgUrl());
 		entity = repository.save(entity);
-		
-		return new ProductDTO(entity);
-		
+		*/
+		copyDTOToEntity(dto, entity);
+		return new ProductDTO(entity);		
 		
 	}	
 
+	@Transactional
+	public ProductDTO update(Long id, ProductDTO dto) {
+		//diferente do método findbyid. Não vai no banco e faz sql. Só prepara 
+		Product entity = repository.getReferenceById(id);
+		//copiar para a entidade os dados que vieram da dto(la do controler)
+		/*entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setPrice(dto.getPrice());
+		entity.setimgUrl(dto.getImgUrl());
+		entity = repository.save(entity);
+		*/
+		copyDTOToEntity(dto, entity);
+		
+		return new ProductDTO(entity);		
+		
+	}
+
+	private void copyDTOToEntity(ProductDTO dto, Product entity) {
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setPrice(dto.getPrice());
+		entity.setimgUrl(dto.getImgUrl());
+		entity = repository.save(entity);		
+	}	
+
+	
 	
 }
