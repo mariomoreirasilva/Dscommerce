@@ -36,6 +36,21 @@ public class ProductService {
 		
 		
 	}	
-	
+
+	@Transactional
+	public ProductDTO insert(ProductDTO dto) {
+		Product entity = new Product();
+		//copiar para a entidade os dados que vieram da dto(la do controler)
+		entity.setName(dto.getName());
+		entity.setDescription(dto.getDescription());
+		entity.setPrice(dto.getPrice());
+		entity.setimgUrl(dto.getImgUrl());
+		entity = repository.save(entity);
+		
+		return new ProductDTO(entity);
+		
+		
+	}	
+
 	
 }
